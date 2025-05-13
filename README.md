@@ -103,3 +103,51 @@ The async function has 3 states
 
 ![async state machine](https://github.com/user-attachments/assets/7d9c1692-ac29-476d-9348-f09395ac9f07)
 
+### Async method execution
+
+Since async is a state mission it can pause and resume execution.
+
+- In the start the method executes synchronusly until it hits an `await`.
+- At the await it checks the awaited task :
+
+    - If the task is already `complete`, it continues synchronusly.
+    - If the task is `not complete`,it returns control to the caller, and the rest of the method is paused
+    - this awaited operation is a non-blocking one ( I/O, delay,file operation,etc).
+    - when the awaited task completes then the continuation login is run.
+- If `ConfigureAwait(true)` => resumes on original thread.
+- If `ConfigureAwait(false)` => resumes on any available thread from the thread pool.
+
+## How does the async method know when to continue ?
+
+- This is where `Task` comes in.
+- the awaited method returns a `Task` which notifies the state mission that the task is completed.
+- By getting this Task the state machine will resume executing the continution logic/code.
+- The returned task from the await and the continuation logic are concatenated as a single task and are returned.
+- this returned task is used to notify the caller that the task is completed.
+
+## So we await a method and it pauses ? if it pauses then where ist running ?
+
+This depends on what we are awaiting.
+
+### Awaiting an I/O bound task (e.g. Task.Delay, file operation, HTTP, etc)
+
+- This does not run on any thread.
+- - it runs via OS signals.
+- It uses OS-level async mechanisms (like timers,sockets,etc)
+- this is why thread is freed up during wait.
+
+```csharp
+await Task.Delay(1000);
+```
+
+
+### Awaiting a CPU-bound task (e.g. Task.Run())
+
+- This runs on a thread pool thread.
+- We explicitly offload work to a thread via `Task.Run()`.
+- It runs on a background thread while we `await` it.
+
+```csharp
+// Runs on a thread from thread pool
+await Task.Run(() => MyFunc());
+```
