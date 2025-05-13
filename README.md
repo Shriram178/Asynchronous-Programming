@@ -125,7 +125,7 @@ Since async is a state mission it can pause and resume execution.
 - The returned task from the await and the continuation logic are concatenated as a single task and are returned.
 - this returned task is used to notify the caller that the task is completed.
 
-## So we await a method and it pauses ? if it pauses then where ist running ?
+## So we await a method and it pauses ? if it pauses then where is it running ?
 
 This depends on what we are awaiting.
 
