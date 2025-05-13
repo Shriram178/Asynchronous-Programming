@@ -132,7 +132,7 @@ This depends on what we are awaiting.
 ### Awaiting an I/O bound task (e.g. Task.Delay, file operation, HTTP, etc)
 
 - This does not run on any thread.
-      - it runs via OS signals.
+- it runs via OS signals.
 - It uses OS-level async mechanisms (like timers,sockets,etc)
 - this is why thread is freed up during wait.
 
