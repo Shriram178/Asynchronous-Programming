@@ -54,22 +54,52 @@ solve samll issues,
 
 # Programming context
 
-We can have only 8 threads then whats the purpose of creating `a new Thread()`?
+### We can have only 8 threads then whats the purpose of creating `a new Thread()`?
 
 - A core can run a thread when we create a `new Thread()` it gets added to the queue and will be
 run in core when OS allocates it the needed core.
 
-# We have only 8 threads and so where does the threads from thread pool come from ?
+- Think of a thread like an object which is created for executing stuff inside the core.
+
+### We have only 8 threads and so where does the threads from thread pool come from ?
 
 Spawning a thread is an costly operation, thus we have all the threads ready in the 
 thread pool.
 
+- We shold not create many objects often so we use threadpool which will have a collection of thread objects and borrow one for 
+processing by updating the `execution context`.
+
+![image](https://github.com/user-attachments/assets/c5dc0b37-32a1-4b2e-9ac3-0b1fab6eef0a)
+
 - The thread pool uses lazy creation of threads, its starts slowly and creates thread as per the usage
 and need.
 
+- The `Thread pool` uses `factory pattern` to produce/reuse and provide us the Thread object.
+
 - We use `Task` to run a method using a thread from the thread pool.
+
 - `Task` => Instruction set. (will explore more when in aynchronus programming section)
 
 
+# Asynchronous-Programming
 
+The common misconception is that when a async program hits an await keyword
+it allocates that awaited method to a another thread and moves on but it is not so.
+
+In reality the `async` keyword is just a sytactic sugar for converting an funtion
+into a state machine.
+
+### State machine :
+
+![image](https://github.com/user-attachments/assets/347f3ded-5c00-4146-81d6-7ebdae54ce17)
+
+A state machine is an event driven system where we transition from one state to another based on certain conditions.
+
+- When we use `async` behind the scenes the compiler transforms async method into a state machine to manage the asynchronus flow.
+
+- Each `await` introduces a checkpoint where the method pauses and resumes after the awaited task completes.
+
+The async function has 3 states 
+
+![async state machine](https://github.com/user-attachments/assets/7d9c1692-ac29-476d-9348-f09395ac9f07)
 
