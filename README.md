@@ -52,5 +52,24 @@ solve samll issues,
 
 - The manager doesn't permanently stand at one counter.
 
+# Programming context
+
+We can have only 8 threads then whats the purpose of creating `a new Thread()`?
+
+- A core can run a thread when we create a `new Thread()` it gets added to the queue and will be
+run in core when OS allocates it the needed core.
+
+# We have only 8 threads and so where does the threads from thread pool come from ?
+
+Spawning a thread is an costly operation, thus we have all the threads ready in the 
+thread pool.
+
+- The thread pool uses lazy creation of threads, its starts slowly and creates thread as per the usage
+and need.
+
+- We use `Task` to run a method using a thread from the thread pool.
+- `Task` => Instruction set. (will explore more when in aynchronus programming section)
+
+
 
 
