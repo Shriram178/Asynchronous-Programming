@@ -45,7 +45,7 @@ this handles quick tasks (e.g. keyboard inputs) and returns.
 
 For example :
 
-- The OS acts like a manager who quickly steps in and organizes queue lines os 
+- The OS acts like a manager who quickly steps in and organizes queue lines or
 solve samll issues,
 
 - but the customers (app/task) are still served at all 8 counters.
